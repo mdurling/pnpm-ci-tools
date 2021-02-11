@@ -1,3 +1,8 @@
+# This project uses pnpm. Ignore npm/yarn lock files and pnpm virtual-store-dir
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
+.pnpm
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,macos,windows,linux,osx,visualstudiocode,sublimetext,emacs
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,vscode,macos,windows,linux,osx,visualstudiocode,sublimetext,emacs
