@@ -1,0 +1,31 @@
+{
+  "name": "pnpm-audit-check",
+  "version": "1.0.0-beta1",
+  "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
+  "main": "dist/index.js",
+  "bin": {
+    "pnpm-audit-check": "./bin/pnpm-audit-check"
+  },
+  "files": [
+    "dist/",
+    "bin/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '*/**/*.ts'",
+    "lint:fix": "pnpm lint -- --fix",
+    "test": "./bin/pnpm-audit-check"
+  },
+  "keywords": [
+    "pnpm"
+  ],
+  "author": "Michael Durling",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "14.14.25",
+    "@types/yargs": "16.0.0"
+  },
+  "dependencies": {
+    "yargs": "16.2.0"
+  }
+}
