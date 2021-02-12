@@ -6,15 +6,6 @@ This package provides a command that allows [pnpm audit](https://pnpm.js.org/en/
 
 This project was inspired by similar tools available for [npm](https://www.npmjs.com/package/better-npm-audit) and [yarn](https://www.npmjs.com/package/improved-yarn-audit)
 
-## Installation
-Install this package as a dev dependency:
-```sh
-pnpm add -D pnpm-ci-audit
-```
-If installing this package in a monorepo that uses [pnpm workspaces](https://pnpm.js.org/en/workspaces) then install it in the workspace root using:
-```sh
-pnpm add -D -w pnpm-ci-audit
-```
 ## Check for all advisories.
 ```sh
 pnpx pnpm-ci-audit
@@ -40,4 +31,14 @@ pnpx pnpm-ci-audit -i 123 -i 456
 In this mode, any advisory that is ignored using `--ignore-advisories` but is not detected by the audit will cause the command to fail.
 ```sh
 pnpx pnpm-ci-audit -i 123,456 --strict
+```
+
+## Local Installation
+As an alternative to using `pnpx`, this package can be installed as a dev dependency in a project and run from an npm script.
+```sh
+pnpm add -D pnpm-ci-audit
+```
+If installing this package in a monorepo that uses [pnpm workspaces](https://pnpm.js.org/en/workspaces) then install it in the workspace root using:
+```sh
+pnpm add -D -w pnpm-ci-audit
 ```
