@@ -2,12 +2,9 @@
 
 [![NPM](https://nodei.co/npm/pnpm-ci-audit.png)](https://nodei.co/npm/pnpm-ci-audit/)
 
-This project provides a command that allows [pnpm audit](https://pnpm.js.org/en/cli/audit) to be used in a CI/CD environment.
+This package provides a command that allows [pnpm audit](https://pnpm.js.org/en/cli/audit) to be used in a CI/CD environment.
 
 This project was inspired by similar tools available for [npm](https://www.npmjs.com/package/better-npm-audit) and [yarn](https://www.npmjs.com/package/improved-yarn-audit)
-
-## Build Status
-[![Codeship Status for drtyh2o/pnpm-ci-tools](https://app.codeship.com/projects/17ef8a79-792a-4af9-961f-606c6d6dc1f5/status?branch=main)](https://app.codeship.com/projects/428097)
 
 ## Installation
 Install this package as a dev dependency:

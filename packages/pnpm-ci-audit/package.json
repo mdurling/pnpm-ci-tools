@@ -1,6 +1,6 @@
 {
   "name": "pnpm-ci-audit",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "repository": {
     "type": "git",
