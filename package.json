@@ -18,7 +18,7 @@
     "task": "pnpm run -r --filter=!pnpm-ci-tools",
     "lint": "eslint 'packages/**/*.ts'",
     "lint:fix": "pnpm lint -- --fix",
-    "preinstall": "npx only-allow pnpm && npx toolcheck",
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "husky install",
     "pretest": "pnpm build",
     "test": "pnpm task test"
