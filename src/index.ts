@@ -1,10 +1,26 @@
 #!/usr/bin/env node
 import { promisify } from 'util'
 import { exec } from 'child_process'
+import yargs from 'yargs'
 
 // Advisory severities
 const SeverityLevels = <const>['low', 'moderate', 'high', 'critical']
 type SeverityLevel = typeof SeverityLevels[number]
+
+const options = yargs(process.argv.slice(2))
+  .parserConfiguration({ 'unknown-options-as-args': true, 'greedy-arrays': false })
+  .options({
+    'audit-level': {
+      description: 'Include advisories with severity greater than or equal to <audit-level>',
+      choices: SeverityLevels
+    },
+    'ignore-advisories': {
+      description: 'Ignore advisories with the specified ids',
+      alias: 'i',
+      array: true
+    }
+  })
+  .help('help').argv
 
 interface Advisory {
   id: number
@@ -18,16 +34,17 @@ interface Advisory {
 }
 
 interface AuditJson {
-  advisories: { [x: number]: Advisory }
+  advisories: { [x: string]: Advisory }
   metadata: { totalDependencies: number }
 }
 
 class PNPM {
   public static audit = async (): Promise<number> => {
-    const pnpmAuditJson = async (): Promise<AuditJson> => {
+    const pnpmAuditJson = async (command: string): Promise<AuditJson> => {
       const pnpmAudit = async (): Promise<string> => {
         try {
-          const { stdout } = await promisify(exec)(`pnpm audit --json`)
+          console.log(`Running: "${command}"`)
+          const { stdout } = await promisify(exec)(command)
           return stdout
         } catch ({ stdout }) {
           return stdout
@@ -43,43 +60,54 @@ class PNPM {
     }
 
     // Parse minimum severity level and advisory exclusions from command line arguments
-    const [level = 'low', ...excluding] = process.argv.slice(2).map(arg => arg.toLowerCase())
-    const minSeverityLevel = SeverityLevels.indexOf(<SeverityLevel>level)
-    if (minSeverityLevel < 0 || (excluding.length > 0 && excluding.some(id => !/^-?\d+$/.test(id)))) {
-      console.log(`Usage: check-advisories <${SeverityLevels.join('|')}> [...list of numeric advisory ids to exclude]"`)
-      return 1
-    }
+    const { _ = [], 'audit-level': level = 'low', 'ignore-advisories': ignore = [] } = options
+    const ignored = [
+      ...new Set(
+        ignore.reduce<string[]>((ids, id) => [...ids, ...`${id}`.split(',')], []).filter(id => /^-?\d+$/.test(id))
+      )
+    ]
 
-    // Set exclusions
-    const exclusions = excluding.map(Number)
-
-    // Get advisories
-    console.log(`Running: pnpm audit --json --audit-level=${SeverityLevels[minSeverityLevel]}`)
+    const minSeverityLevel = SeverityLevels.indexOf(level)
 
     const {
       advisories,
       metadata: { totalDependencies }
-    } = await pnpmAuditJson()
+    } = await pnpmAuditJson(
+      `pnpm audit --json --audit-level=${level} ${_.filter(arg => `${arg}`.startsWith('-')).join(' ')}`
+    )
 
     // Ignore advisories below minimum severity level or excluded
-    const vulnerabilities = Object.values(advisories)
-      .filter(({ id }) => !exclusions.includes(id))
-      .filter(({ severity }) => SeverityLevels.indexOf(severity) >= minSeverityLevel)
+    const vulnerabilities = Object.entries(advisories).filter(
+      ([id, { severity }]) => !ignored.includes(id) && SeverityLevels.indexOf(severity) >= minSeverityLevel
+    )
 
     // Detect outdated exclusions
-    const outdated = exclusions.filter(
-      exclusion => !Object.values(advisories).some(advisory => advisory.id === exclusion)
+    const exclusions = ignored.reduce<{ excluded: string[]; outdated: string[] }>(
+      (result, id) => {
+        return {
+          ...result,
+          ...(Object.keys(advisories).includes(id)
+            ? { excluded: [...result.excluded, id] }
+            : { outdated: [...result.outdated, id] })
+        }
+      },
+      {
+        excluded: [],
+        outdated: []
+      }
     )
 
     // Display results
     console.log(
       `Found ${vulnerabilities.length === 0 ? 'no' : `${vulnerabilities.length}`} ${
         vulnerabilities.length === 1 ? 'vulnerability' : 'vulnerabilities'
-      } in ${totalDependencies} dependencies${excluding.length > 0 ? ` (excluding ${excluding.join(', ')})` : ''}`
+      } in ${totalDependencies} dependencies${
+        exclusions.excluded.length > 0 ? ` (excluding ${exclusions.excluded.join(', ')})` : ''
+      }`
     )
 
     // Display vulnerabilities
-    vulnerabilities.forEach(({ title, severity, url, findings }) => {
+    vulnerabilities.forEach(([, { title, severity, url, findings }]) => {
       console.log(` - ${url}: ${title} (${severity.toUpperCase()})`)
       findings.forEach(({ version, paths }) => {
         paths.forEach(path => {
@@ -89,14 +117,13 @@ class PNPM {
     })
 
     // Display outdated exclusions
-    outdated.forEach(exclusion => {
-      console.log(`Advisory exclusion for ${exclusion} is no longer required`)
+    exclusions.outdated.forEach(id => {
+      console.log(`Advisory exclusion for ${id} is no longer required`)
     })
 
     // Exit with code representing the number of vulerabilities found
-    process.exit(vulnerabilities.length)
+    return vulnerabilities.length
   }
 }
 
-// Run the audit
 PNPM.audit().then(code => process.exit(code))

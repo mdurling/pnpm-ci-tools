@@ -1,21 +1,23 @@
 {
   "name": "pnpm-audit",
-  "version": "1.0.0",
+  "version": "1.0.0-rc1",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "main": "dist/index.js",
   "bin": {
-    "pnpm-audit": "./bin/pnpm-audiit"
+    "pnpm-audit": "./bin/pnpm-audit"
   },
   "scripts": {
+    "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
+    "clean": "pnpm clean:only && pnpm install",
     "build": "tsc",
     "lint": "eslint '*/**/*.ts'",
     "lint:fix": "pnpm lint -- --fix",
-    "preinstall": "npx only-allow pnpm && pnpx toolcheck",
+    "preinstall": "npx only-allow pnpm && npx toolcheck",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "start": "pnpm build && pnpm-audit",
-    "test": "pnpm lint"
+    "test": "pnpm build && ./bin/pnpm-audit -i foo"
   },
   "keywords": [
     "pnpm"
@@ -24,6 +26,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "14.14.25",
+    "@types/yargs": "16.0.0",
     "@typescript-eslint/eslint-plugin": "4.15.0",
     "@typescript-eslint/parser": "4.15.0",
     "eslint": "7.19.0",
@@ -33,7 +36,10 @@
     "lint-staged": "10.5.4",
     "pinst": "2.1.4",
     "prettier": "2.2.1",
-    "toolcheck": "0.1.4",
+    "ts-node": "9.1.1",
     "typescript": "4.1.5"
+  },
+  "dependencies": {
+    "yargs": "16.2.0"
   }
 }
