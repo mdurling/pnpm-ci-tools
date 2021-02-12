@@ -1,7 +1,5 @@
 # pnpm-ci-audit
 
-[![NPM](https://nodei.co/npm/pnpm-ci-audit.png)](https://nodei.co/npm/pnpm-ci-audit/)
-
 This package provides a command that allows [pnpm audit](https://pnpm.js.org/en/cli/audit) to be used in a CI/CD environment.
 
 This project was inspired by similar tools available for [npm](https://www.npmjs.com/package/better-npm-audit) and [yarn](https://www.npmjs.com/package/improved-yarn-audit)
