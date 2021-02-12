@@ -22,7 +22,7 @@ importers:
       prettier: 2.2.1
       ts-node: 9.1.1
       typescript: 4.1.5
-  packages/pnpm-audit-check:
+  packages/pnpm-ci-audit:
     dependencies:
       yargs: 16.2.0
     devDependencies:

@@ -1,10 +1,10 @@
 {
-  "name": "pnpm-audit-check",
-  "version": "1.0.0-beta1",
+  "name": "pnpm-ci-audit",
+  "version": "1.0.0-beta.1",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "main": "dist/index.js",
   "bin": {
-    "pnpm-audit-check": "./bin/pnpm-audit-check"
+    "pnpm-ci-audit": "./bin/pnpm-ci-audit.sh"
   },
   "files": [
     "dist/",
@@ -14,7 +14,7 @@
     "build": "tsc",
     "lint": "eslint '*/**/*.ts'",
     "lint:fix": "pnpm lint -- --fix",
-    "test": "./bin/pnpm-audit-check"
+    "test": "./bin/pnpm-ci-audit"
   },
   "keywords": [
     "pnpm"

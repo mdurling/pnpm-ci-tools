@@ -1,12 +1,12 @@
 {
-  "name": "pnpm-tools",
+  "name": "pnpm-ci-tools",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
     "clean": "pnpm clean:only && pnpm install",
     "build": "pnpm task build",
-    "task": "pnpm run -r --filter=!pnpm-tools",
+    "task": "pnpm run -r --filter=!pnpm-ci-tools",
     "lint": "eslint 'packages/**/*.ts'",
     "lint:fix": "pnpm lint -- --fix",
     "preinstall": "npx only-allow pnpm && npx toolcheck",
