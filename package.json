@@ -4,7 +4,7 @@
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "main": "dist/index.js",
   "bin": {
-    "pnpm-audit-check": "./bin/pnpm-audit"
+    "pnpm-audit-check": "./bin/pnpm-audit-check"
   },
   "scripts": {
     "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
@@ -17,7 +17,7 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "start": "pnpm build && pnpm-audit",
-    "test": "pnpm build && ./bin/pnpm-audit -i foo"
+    "test": "pnpm build && pnpm-audit-check -i foo"
   },
   "keywords": [
     "pnpm"
