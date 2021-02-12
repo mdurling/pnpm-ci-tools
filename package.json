@@ -1,6 +1,6 @@
 {
   "name": "pnpm-audit-check",
-  "version": "1.0.0-rc1",
+  "version": "0.0.1",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "main": "dist/index.js",
   "bin": {
