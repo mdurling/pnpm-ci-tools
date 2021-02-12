@@ -2,6 +2,16 @@
   "name": "pnpm-ci-audit",
   "version": "1.0.0-beta.1",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drtyh2o/pnpm-ci-tools.git"
+  },
+  "keywords": [
+    "pnpm",
+    "audit"
+  ],
+  "author": "Michael Durling",
+  "license": "MIT",
   "main": "dist/index.js",
   "bin": {
     "pnpm-ci-audit": "./bin/pnpm-ci-audit.sh"
@@ -12,15 +22,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint '*/**/*.ts'",
-    "lint:fix": "pnpm lint -- --fix",
-    "test": "./bin/pnpm-ci-audit"
+    "test": "./bin/pnpm-ci-audit.sh"
   },
-  "keywords": [
-    "pnpm"
-  ],
-  "author": "Michael Durling",
-  "license": "MIT",
   "devDependencies": {
     "@types/node": "14.14.25",
     "@types/yargs": "16.0.0"

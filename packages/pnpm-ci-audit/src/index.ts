@@ -43,7 +43,7 @@ class PNPM {
     const pnpmAuditJson = async (command: string): Promise<AuditJson> => {
       const pnpmAudit = async (): Promise<string> => {
         try {
-          console.log(`Running: "${command}"`)
+          console.log(`Running: "${command.trim()}"`)
           const { stdout } = await promisify(exec)(command)
           return stdout
         } catch ({ stdout }) {
