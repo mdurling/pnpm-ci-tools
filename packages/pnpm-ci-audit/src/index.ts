@@ -19,9 +19,8 @@ const options = yargs(process.argv.slice(2))
       alias: 'i',
       array: true
     },
-    'fail-on-outdated-ignore': {
-      description: 'Fail if ignored advisories are outdated',
-      alias: 'F',
+    strict: {
+      description: 'Strict Mode: Fail if ignored advisories are not detected by the audit',
       boolean: true,
       default: false
     }
@@ -66,12 +65,7 @@ class PNPM {
     }
 
     // Parse minimum severity level and advisory exclusions from command line arguments
-    const {
-      _ = [],
-      'audit-level': auditLevel = 'low',
-      'ignore-advisories': ignoreAdvisories = [],
-      'fail-on-outdated-ignore': failOnOutdatedIgnore
-    } = options
+    const { _ = [], 'audit-level': auditLevel = 'low', 'ignore-advisories': ignoreAdvisories = [], strict } = options
 
     const ignored = [...new Set(ignoreAdvisories.reduce<string[]>((ids, id) => [...ids, ...`${id}`.split(',')], []))]
 
@@ -130,7 +124,7 @@ class PNPM {
     })
 
     // Return the number of vulerabilities found (optionally fail if outdated ignored advisories)
-    return vulnerabilities.length + (failOnOutdatedIgnore ? exclusions.outdated.length : 0)
+    return vulnerabilities.length + (strict ? exclusions.outdated.length : 0)
   }
 }
 
