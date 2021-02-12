@@ -1,10 +1,10 @@
 {
-  "name": "pnpm-audit",
+  "name": "pnpm-audit-check",
   "version": "1.0.0-rc1",
   "description": "A wrapper for using the pnpm audit command with CI/CD pipelines",
   "main": "dist/index.js",
   "bin": {
-    "pnpm-audit": "./bin/pnpm-audit"
+    "pnpm-audit-check": "./bin/pnpm-audit"
   },
   "scripts": {
     "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
