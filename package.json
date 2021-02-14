@@ -1,6 +1,7 @@
 {
   "name": "pnpm-ci-tools",
   "version": "1.0.0",
+  "description": "CI commands for pnpm",
   "keywords": [
     "pnpm",
     "audit"
@@ -13,7 +14,8 @@
   "author": "Michael Durling",
   "main": "dist/index.js",
   "bin": {
-    "pnpm-ci": "./bin/pnpm-ci"
+    "pnpm-ci": "./bin/pnpm-ci-tools",
+    "pnpm-ci-tools": "./bin/pnpm-ci-tools"
   },
   "files": [
     "dist/",
