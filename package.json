@@ -22,7 +22,7 @@
     "bin/"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --listEmittedFiles",
     "clean": "pnpm clean:only && pnpm install",
     "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
     "postinstall": "npx only-allow pnpm && husky install",
@@ -31,7 +31,7 @@
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "pretest": "pnpm build",
-    "test": "bin/pnpm-ci audit"
+    "test": "bin/pnpm-ci-tools audit"
   },
   "dependencies": {
     "yargs": "16.2.0"
