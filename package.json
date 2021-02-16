@@ -26,13 +26,14 @@
     "clean": "pnpm clean:only && pnpm install",
     "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
     "postinstall": "npx only-allow pnpm && husky install",
-    "lint": "pnpm lint:eslint '**/*.ts' && pnpm lint:prettier '**/package.json'",
+    "lint": "pnpm lint:audit && pnpm lint:eslint '**/*.ts' && pnpm lint:prettier '**/package.json'",
+    "lint:audit": "bin/pnpm-ci-tools audit",
     "lint:eslint": "eslint --ignore-path=.gitignore",
     "lint:prettier": "prettier --check",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
-    "pretest": "pnpm lint && pnpm build",
-    "test": "eslint '**/*.ts' && prettier --check '**/package.json' && bin/pnpm-ci-tools audit"
+    "pretest": "pnpm build",
+    "test": "pnpm lint"
   },
   "dependencies": {
     "yargs": "16.2.0"
