@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import type { Argv } from 'yargs'
 import { promisify } from 'util'
 import { exec } from 'child_process'
