@@ -24,34 +24,34 @@
   "scripts": {
     "build": "tsc --listEmittedFiles",
     "clean": "pnpm clean:only && pnpm install",
-    "clean:only": "git clean -fdX -e '!.pnpm' -e '!.pnpm/**'",
-    "postinstall": "npx only-allow pnpm && husky install",
+    "clean:only": "git clean -fdX",
+    "preinstall": "npx only-allow pnpm",
     "lint": "pnpm lint:audit && pnpm lint:eslint '**/*.ts' && pnpm lint:prettier '**/package.json'",
-    "lint:audit": "bin/pnpm-ci-tools audit",
+    "lint:audit": "ts-node src/index.ts audit",
     "lint:eslint": "eslint --ignore-path=.gitignore",
     "lint:prettier": "prettier --check",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
-    "pretest": "pnpm build",
+    "prepare": "husky install",
     "test": "pnpm lint"
   },
   "dependencies": {
     "yargs": "16.2.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.27",
+    "@types/node": "14.14.31",
     "@types/yargs": "16.0.0",
-    "@typescript-eslint/eslint-plugin": "4.15.0",
-    "@typescript-eslint/parser": "4.15.0",
-    "eslint": "7.19.0",
-    "eslint-config-prettier": "7.2.0",
+    "@typescript-eslint/eslint-plugin": "4.15.2",
+    "@typescript-eslint/parser": "4.15.2",
+    "eslint": "7.21.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-log": "1.2.7",
     "eslint-plugin-prettier": "3.3.1",
-    "husky": "5.0.9",
+    "eslint-plugin-promise": "4.3.1",
+    "husky": "5.1.2",
     "lint-staged": "10.5.4",
-    "pinst": "2.1.4",
     "prettier": "2.2.1",
-    "prettier-plugin-packagejson": "2.2.9",
+    "prettier-plugin-packagejson": "2.2.10",
     "ts-node": "9.1.1",
-    "typescript": "4.1.5"
+    "typescript": "4.2.2"
   }
 }
