@@ -119,7 +119,7 @@ export default function audit(yargs: Argv): Argv {
 
       // Display vulnerabilities
       vulnerabilities.forEach(([, { title, severity, url, findings }]) => {
-        console.log(` - ${url}: ${title} (${severity.toUpperCase()})`)
+        console.log(` - ${url} ${title} (${severity.toUpperCase()})`)
         findings.forEach(({ version, paths }) => {
           paths.forEach(path => {
             console.log(`    - ${path.replace(/>/g, ' > ')}@${version}`)
