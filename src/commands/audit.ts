@@ -116,6 +116,19 @@ export const auditCommand = async ({
 
   // Return the number of vulerabilities found (optionally fail if outdated ignored advisories)
   if (errors) {
+    const active = vulnerabilities
+      .map(({ github_advisory_id }) => github_advisory_id)
+      .concat(exclusions.excluded)
+      .sort()
+    console.log(
+      'Use the following command to exclude all active advisories:',
+      [
+        'pnpm-ci audit',
+        ...(auditLevel === DefaultSeverityLevel ? [] : ['-l', auditLevel]),
+        ...(strict ? ['--strict'] : []),
+        ...(active.length ? ['-i', ...active] : [])
+      ].join(' ')
+    )
     throw { code: errors }
   }
 }
