@@ -13,5 +13,5 @@
       }
     }
   ],
-  "plugins": ["./node_modules/prettier-plugin-packagejson"]
+  "plugins": ["./node_modules/prettier-plugin-packagejson/lib/index.js"]
 }

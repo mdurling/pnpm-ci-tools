@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-pnpx --no-install lint-staged
+pnpx lint-staged
 pre-commit

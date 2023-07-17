@@ -4,7 +4,7 @@ import { exec } from 'child_process'
 // Advisory severities
 export const SeverityLevels = <const>['low', 'moderate', 'high', 'critical']
 export const [DefaultSeverityLevel] = SeverityLevels
-type SeverityLevel = typeof SeverityLevels[number]
+type SeverityLevel = (typeof SeverityLevels)[number]
 
 interface Advisory {
   github_advisory_id: string
